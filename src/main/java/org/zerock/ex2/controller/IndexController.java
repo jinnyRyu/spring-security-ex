@@ -1,6 +1,8 @@
 package org.zerock.ex2.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,9 +38,9 @@ public class IndexController {
         return "admin";
     }
 
-    @GetMapping("/mamager")
+    @GetMapping("/manager")
     public @ResponseBody String mamager(){
-        return "mamager";
+        return "manager";
     }
 
     //
@@ -64,5 +66,16 @@ public class IndexController {
         return new RedirectView("/loginForm");//themleaf reidrect 사용함수 
     }
 
+    @Secured("ROLE_ADMIN")//EnableGlobalMethodSecurity 어노테이션 활성화 시켜야 사용가능
+    @GetMapping("/info")
+    public @ResponseBody String info(){
+        return "personal info";
+    }
+
+    @PreAuthorize("hasRole('ROLE_MANAGER')")// data()가 실행되기 직전에 실행
+    @GetMapping("/data")
+    public @ResponseBody String data(){
+        return "data info";
+    }
 
 }

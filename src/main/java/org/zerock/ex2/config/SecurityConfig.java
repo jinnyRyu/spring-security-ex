@@ -2,6 +2,7 @@ package org.zerock.ex2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity//spring security 필터가 spring 필터체인에 등록된다.
+@EnableGlobalMethodSecurity(securedEnabled = true,prePostEnabled = true)//secured 어노테이션 활성화 ,preAuthorize 어노테이션 활성화 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean//해당메서드의 리턴되는 오브젝트를ioc로 등록해줌
     public BCryptPasswordEncoder encodePwd(){
